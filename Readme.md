@@ -1,7 +1,8 @@
 
 # People list app
 
-The goal of this project is doing a practise using Next + Material UI + Typescript.
+The goal of this project is to create an application to show a list of people.
+
 
 ## Installation
 
