@@ -1,4 +1,4 @@
-export interface mockDataListProps {
+export interface initialDataProps {
 	id: number;
 	name: string,
 	lastName: string,
@@ -7,7 +7,7 @@ export interface mockDataListProps {
 	active: boolean;
 };
 
-export const mockDataList:mockDataListProps[] = [
+export const initialData:initialDataProps[] = [
 	{
 		id: 1,
 		name: 'Jorge',

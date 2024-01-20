@@ -11,8 +11,6 @@ import {
   DocumentProps,
   DocumentContext,
 } from "next/document";
-import { BasicTable } from "./basic-table.component";
-import { Typography, Box } from "@mui/material";
 
 export default function Document(props: DocumentProps & DocumentHeadTagsProps) {
   return (
@@ -21,13 +19,6 @@ export default function Document(props: DocumentProps & DocumentHeadTagsProps) {
         <DocumentHeadTags {...props} />
       </Head>
       <body>
-        <Box padding={2}>
-          <Typography variant="h5" marginBottom={2}>
-            {`Create an application to show a list of people`}
-          </Typography>
-          <BasicTable />
-        </Box>
-
         <Main />
         <NextScript />
       </body>

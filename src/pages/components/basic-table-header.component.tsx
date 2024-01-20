@@ -6,6 +6,7 @@ const dataHeaderTable = [
   "Job title",
   "Birth date",
   "Active",
+  "Action",
 ];
 
 export const BasicTableHeader = () => {
