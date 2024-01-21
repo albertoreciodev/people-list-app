@@ -10,6 +10,7 @@ export const BasicTable = () => {
       <Table sx={{ minWidth: 650 }} aria-label="list of people">
         <BasicTableHeader />
         <BasicTableContent />
+        {/* <Form /> */}
       </Table>
     </TableContainer>
   );

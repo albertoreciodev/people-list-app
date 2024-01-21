@@ -4,7 +4,7 @@ export interface initialDataProps {
 	lastName: string,
 	jobTitle: string,
 	birthDate: string,
-	active: boolean;
+	active: boolean | undefined;
 };
 
 export const initialData:initialDataProps[] = [
