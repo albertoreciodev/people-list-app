@@ -1,4 +1,4 @@
-export interface initialDataProps {
+export interface Persons {
 	id: number;
 	name: string,
 	lastName: string,
@@ -7,7 +7,7 @@ export interface initialDataProps {
 	active: boolean | undefined;
 };
 
-export const initialData:initialDataProps[] = [
+export const Persons:Persons[] = [
 	{
 		id: 1,
 		name: 'Jorge',

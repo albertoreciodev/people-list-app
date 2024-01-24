@@ -1,6 +1,6 @@
 import { TableCell, TableHead, TableRow } from "@mui/material";
 
-const dataHeaderTable = [
+const personsTableHeader = [
   "Name",
   "Last name",
   "Job title",
@@ -9,7 +9,7 @@ const dataHeaderTable = [
   "Action",
 ];
 
-export const BasicTableHeader = () => {
+export const PersonsTableHeader = () => {
   return (
     <TableHead
       sx={(theme) => ({
@@ -18,7 +18,7 @@ export const BasicTableHeader = () => {
       })}
     >
       <TableRow>
-        {dataHeaderTable.map((data, index) => (
+        {personsTableHeader.map((data, index) => (
           <TableCell key={index}>{data}</TableCell>
         ))}
       </TableRow>
