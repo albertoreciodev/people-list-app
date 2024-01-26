@@ -1,18 +1,28 @@
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material/";
+import { Button, Box } from "@mui/material/";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Persons } from "@/persons";
-import { SyntheticEvent, useState } from "react";
+import { Person } from "@/persons";
+import { ChangeEvent, FormEvent, SyntheticEvent, useState } from "react";
 
+/**
+ * @typedef {Object} FormPersonProps
+ * @property {(person: Person) => void} onCreate - Callback function invoked when a new person is created.
+ *   - @param {Person} person - The person object representing the newly created person.
+ */
 type FormPersonProps = {
-  onCreate: (person: Persons) => void;
+  onCreate: (person: Person) => void;
 };
 
 export const FormPerson = ({ onCreate }: FormPersonProps) => {
-  const [formValuesPerson, setFormValuesPerson] = useState<Persons>({
-    id: 0,
+  /**
+   * State representing the form values for a person.
+   *
+   * @type {Person}
+   */
+  const [formValuesPerson, setFormValuesPerson] = useState<Person>({
+    id: "",
     name: "",
     lastName: "",
     jobTitle: "",
@@ -37,16 +47,28 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
   // };
 
   // Form Controlado
-  const handleChange = (e: any) => {
+  /**
+   * Handles the change event of an input element.
+   *
+   * @param {ChangeEvent<HTMLInputElement>} e - The change event object.
+   * @returns {void}
+   */
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormValuesPerson((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const handleSubmit = (e: any) => {
+  /**
+   * Handles the form submission event.
+   *
+   * @param {FormEvent<HTMLFormElement>} e - The form submission event object.
+   * @returns {void}
+   */
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     onCreate(formValuesPerson);
     setFormValuesPerson({
-      id: 0,
+      id: "",
       name: "",
       lastName: "",
       jobTitle: "",
@@ -57,9 +79,10 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
 
   return (
     <>
-      <form
+      <Box
+        component={"form"}
         onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "row", gap: "10px" }}
+        sx={{ display: "flex", flexDirection: "row", gap: "10px" }}
       >
         <TextField
           id="id"
@@ -132,7 +155,7 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
           color="primary"
           type="submit"
         >{`Create new user`}</Button>
-      </form>
+      </Box>
     </>
   );
 };

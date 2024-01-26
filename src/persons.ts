@@ -1,15 +1,24 @@
-export interface Persons {
-	id: number;
-	name: string,
-	lastName: string,
-	jobTitle: string,
-	birthDate: string,
-	active: boolean | undefined;
+/**
+ * @typedef {Object} Person
+ * @property {string} id - Unique identifier for the person.
+ * @property {string} name - Name of the person.
+ * @property {string} lastName - Last name of the person.
+ * @property {string} jobTitle - Job title of the person.
+ * @property {string} birthDate - Birth date of the person.
+ * @property {boolean} active - Indicates whether the person is active or not.
+ */
+export type Person = {
+	id: string;
+	name: string;
+	lastName: string;
+	jobTitle: string;
+	birthDate: string;
+	active: boolean;
 };
 
-export const Persons:Persons[] = [
+export const Persons:Person[] = [
 	{
-		id: 1,
+		id: '1',
 		name: 'Jorge',
 		lastName: 'Ramirez',
 		jobTitle: 'Backend Developer',
@@ -17,7 +26,7 @@ export const Persons:Persons[] = [
     active: true
 	},
   {
-		id: 2,
+		id: '2',
 		name: 'Sebastián',
 		lastName: 'Velázquez',
 		jobTitle: 'Systems Admin & Developer',
@@ -25,7 +34,7 @@ export const Persons:Persons[] = [
     active: true
 	},
   {
-		id: 3,
+		id: '3',
 		name: 'Alberto',
 		lastName: 'Recio',
 		jobTitle: 'Frontend Developer',
@@ -33,7 +42,7 @@ export const Persons:Persons[] = [
     active: true
 	},
   {
-		id: 4,
+		id: '4',
 		name: 'Xevi',
 		lastName: 'Serrat',
 		jobTitle: 'Frontend Developer',
@@ -41,7 +50,7 @@ export const Persons:Persons[] = [
     active: true
 	},
   {
-		id: 5,
+		id: '5',
 		name: 'Christian',
 		lastName: 'Feldermann',
 		jobTitle: 'Head of Technology',

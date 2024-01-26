@@ -1,14 +1,24 @@
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import { Persons } from "../../persons";
+import { Person } from "../../persons";
 import TableBody from "@mui/material/TableBody";
 import { Button } from "@mui/material/";
 
+/**
+ * Props for the PersonsTableContent component.
+ *
+ * @typedef {Object} PersonsTableContentProps
+ * @property {(id: string) => void} onActivate - Function to handle activation of a person.
+ * @property {(id: string) => void} onDelete - Function to handle deletion of a person.
+ * @property {(id: string) => void} onEdit - Function to handle editing of a person.
+ * @property {Person[]} persons - Array of persons to display in the table.
+ */
+
 type PersonsTableContentProps = {
-  onActivate: (id: number) => void;
-  onDelete: (id: number) => void;
-  onEdit: (id: number) => void;
-  persons: Persons[];
+  onActivate: (id: string) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
+  persons: Person[];
 };
 export const PersonsTableContent = ({
   onActivate,
