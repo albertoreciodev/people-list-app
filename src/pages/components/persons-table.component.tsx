@@ -25,8 +25,7 @@ export const PersonsTable = () => {
     setPersons(persons.filter((person) => person.id !== id));
   };
   const handleEdit = (id: number) => {
-    alert("handleEdit");
-    // console.log("handleEdit id", id);
+    //alert(`handleEdit: ${id}`);
   };
 
   const handleCreatePerson = (dataPerson: Persons) => {
