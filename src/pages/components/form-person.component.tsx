@@ -23,7 +23,7 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
    */
   const [formValuesPerson, setFormValuesPerson] = useState<Person>({
     id: "",
-    name: "",
+    firstName: "",
     lastName: "",
     jobTitle: "",
     birthDate: "",
@@ -69,7 +69,7 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
     onCreate(formValuesPerson);
     setFormValuesPerson({
       id: "",
-      name: "",
+      firstName: "",
       lastName: "",
       jobTitle: "",
       birthDate: "",
@@ -101,7 +101,7 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
           label="Name"
           type="text"
           variant="outlined"
-          value={formValuesPerson.name}
+          value={formValuesPerson.firstName}
           onChange={handleChange}
         />
 

@@ -1,7 +1,7 @@
 import { TableCell, TableHead, TableRow } from "@mui/material";
 
 const personsTableHeader = [
-  "Name",
+  "First name",
   "Last name",
   "Job title",
   "Birth date",

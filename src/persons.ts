@@ -1,7 +1,7 @@
 /**
  * @typedef {Object} Person
  * @property {string} id - Unique identifier for the person.
- * @property {string} name - Name of the person.
+ * @property {string} firstName - Name of the person.
  * @property {string} lastName - Last name of the person.
  * @property {string} jobTitle - Job title of the person.
  * @property {string} birthDate - Birth date of the person.
@@ -9,7 +9,7 @@
  */
 export type Person = {
 	id: string;
-	name: string;
+	firstName: string;
 	lastName: string;
 	jobTitle: string;
 	birthDate: string;
@@ -19,7 +19,7 @@ export type Person = {
 export const Persons:Person[] = [
 	{
 		id: '1',
-		name: 'Jorge',
+		firstName: 'Jorge',
 		lastName: 'Ramirez',
 		jobTitle: 'Backend Developer',
     birthDate: '22/11/1982',
@@ -27,7 +27,7 @@ export const Persons:Person[] = [
 	},
   {
 		id: '2',
-		name: 'Sebastián',
+		firstName: 'Sebastián',
 		lastName: 'Velázquez',
 		jobTitle: 'Systems Admin & Developer',
     birthDate: '07/08/1986',
@@ -35,7 +35,7 @@ export const Persons:Person[] = [
 	},
   {
 		id: '3',
-		name: 'Alberto',
+		firstName: 'Alberto',
 		lastName: 'Recio',
 		jobTitle: 'Frontend Developer',
     birthDate: '22/11/1982',
@@ -43,7 +43,7 @@ export const Persons:Person[] = [
 	},
   {
 		id: '4',
-		name: 'Xevi',
+		firstName: 'Xevi',
 		lastName: 'Serrat',
 		jobTitle: 'Frontend Developer',
     birthDate: '28/05/1986',
@@ -51,7 +51,7 @@ export const Persons:Person[] = [
 	},
   {
 		id: '5',
-		name: 'Christian',
+		firstName: 'Christian',
 		lastName: 'Feldermann',
 		jobTitle: 'Head of Technology',
     birthDate: '01/01/1974',

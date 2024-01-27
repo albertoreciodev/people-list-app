@@ -37,6 +37,7 @@ export const PersonsTableContent = ({
           }}
         >
           <TableCell>{person.id}</TableCell>
+          <TableCell>{person.firstName}</TableCell>
           <TableCell>{person.lastName}</TableCell>
           <TableCell>{person.jobTitle}</TableCell>
           <TableCell>{person.birthDate}</TableCell>
