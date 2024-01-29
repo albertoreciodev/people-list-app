@@ -1,6 +1,7 @@
 import { TableCell, TableHead, TableRow } from "@mui/material";
 
 const personsTableHeader = [
+  "ID",
   "First name",
   "Last name",
   "Job title",

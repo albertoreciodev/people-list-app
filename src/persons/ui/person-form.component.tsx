@@ -11,42 +11,21 @@ import { ChangeEvent, FormEvent, SyntheticEvent, useState } from "react";
  * @property {(person: Person) => void} onCreate - Callback function invoked when a new person is created.
  *   - @param {Person} person - The person object representing the newly created person.
  */
-type FormPersonProps = {
-  onCreate: (person: Person) => void;
+type PersonFormProps = {
+  onAddPerson: (person: Person) => void;
+  dataForm: Person;
+  newPerson: Person;
+  onUpdateForm: (person: Person) => void;
+  onNewPerson: (person: Person) => void;
 };
 
-export const FormPerson = ({ onCreate }: FormPersonProps) => {
-  /**
-   * State representing the form values for a person.
-   *
-   * @type {Person}
-   */
-  const [formValuesPerson, setFormValuesPerson] = useState<Person>({
-    id: "",
-    firstName: "",
-    lastName: "",
-    jobTitle: "",
-    birthDate: "",
-    active: false,
-  });
-
-  // Form No controlado
-  // const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   // No controlado
-  //   const newPerson = {
-  //     id: Number(event.currentTarget.id.value),
-  //     name: event.currentTarget.name.value,
-  //     lastName: event.target.lastName.value,
-  //     jobTitle: event.target.jobTitle.value,
-  //     birthDate: event.target.birthDate.value,
-  //     active: event.target.active.checked,
-  //   };
-
-  //   onCreate(newPerson);
-  // };
-
-  // Form Controlado
+export const PersonForm = ({
+  dataForm,
+  newPerson,
+  onAddPerson,
+  onUpdateForm,
+  onNewPerson,
+}: PersonFormProps) => {
   /**
    * Handles the change event of an input element.
    *
@@ -55,7 +34,11 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
    */
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    setFormValuesPerson((prevFormData) => ({ ...prevFormData, [name]: value }));
+    const field = {
+      [name]: value,
+    };
+    //setNewPerson((prevNewPerson) => ({ ...prevNewPerson, [name]: value }));
+    //onNewPerson([...dataForm, field]);
   };
 
   /**
@@ -66,15 +49,7 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
    */
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    onCreate(formValuesPerson);
-    setFormValuesPerson({
-      id: "",
-      firstName: "",
-      lastName: "",
-      jobTitle: "",
-      birthDate: "",
-      active: false,
-    });
+    onAddPerson(newPerson);
   };
 
   return (
@@ -82,7 +57,12 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
       <Box
         component={"form"}
         onSubmit={handleSubmit}
-        sx={{ display: "flex", flexDirection: "row", gap: "10px" }}
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "10px",
+          marginTop: "25px",
+        }}
       >
         <TextField
           id="id"
@@ -91,17 +71,18 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
           type="text"
           variant="outlined"
           sx={{ width: "100px" }}
-          value={formValuesPerson.id}
+          value={dataForm.id}
           onChange={handleChange}
+          disabled
         />
 
         <TextField
-          id="name"
-          name="name"
-          label="Name"
+          id="firstName"
+          name="firstName"
+          label="First name"
           type="text"
           variant="outlined"
-          value={formValuesPerson.firstName}
+          value={dataForm.firstName}
           onChange={handleChange}
         />
 
@@ -111,7 +92,7 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
           label="Last name"
           type="text"
           variant="outlined"
-          value={formValuesPerson.lastName}
+          value={dataForm.lastName}
           onChange={handleChange}
         />
         <TextField
@@ -120,16 +101,15 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
           label="Job title"
           type="text"
           variant="outlined"
-          value={formValuesPerson.jobTitle}
+          value={dataForm.jobTitle}
           onChange={handleChange}
         />
         <TextField
           id="birthDate"
           name="birthDate"
-          //label="Birth date"
           type="date"
           variant="outlined"
-          value={formValuesPerson.birthDate}
+          value={dataForm.birthDate}
           onChange={handleChange}
         />
 
@@ -139,11 +119,11 @@ export const FormPerson = ({ onCreate }: FormPersonProps) => {
             labelPlacement="start"
             label="Active"
             name="active"
-            value={formValuesPerson.active}
+            value={dataForm.active}
             ///onChange={(e) => console.log("checkbox", e.target.checked)}
             onChange={(e: SyntheticEvent<Element, Event>, checked: boolean) =>
-              setFormValuesPerson((formValuesPerson) => ({
-                ...formValuesPerson,
+              setNewPerson((prevNewPerson) => ({
+                ...prevNewPerson,
                 active: checked,
               }))
             }
