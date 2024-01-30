@@ -1,9 +1,9 @@
 import { Table, TableContainer, Box, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { TableCell, TableHead, TableRow } from "@mui/material";
-import { Person } from "../../persons";
 import TableBody from "@mui/material/TableBody";
 import { Button } from "@mui/material/";
+import { Person } from "../domain/person.type";
 
 const personsTableHeader = [
   "ID",
@@ -21,7 +21,7 @@ type PersonsTableProps = {
   onSelect: (person: Person | null) => void;
   selectedPerson: Person | null;
   // onEdit: (id: string) => void;
-  onUpdate(person: Partial<Person>): void;
+  onUpdatePerson: (personId: string, person: Partial<Person>) => void;
   persons: Person[];
 };
 
@@ -31,19 +31,16 @@ export const PersonsTable = ({
   onDelete,
   onSelect,
   selectedPerson,
-  onUpdate,
+  onUpdatePerson,
 }: PersonsTableProps) => {
   const handleSelect = (id: string) => {
     const selectRow = persons.find((person) => person.id === id);
     onSelect(selectRow !== undefined ? selectRow : null);
   };
 
-  const handleUpdate = (id: string) => {
-    const selectRow = persons.find((person) => person.id === id);
-
-    if (selectRow) {
-      onUpdate(selectRow);
-    }
+  const handleEdit = (id: string) => {
+    const selectPerson = persons.find((person) => person.id === id);
+    onUpdatePerson(id, selectPerson);
   };
   return (
     <>
@@ -105,7 +102,7 @@ export const PersonsTable = ({
                     </Button>
                     <Button
                       variant="outlined"
-                      onClick={() => handleUpdate(person.id)}
+                      onClick={() => handleEdit(person.id)}
                       sx={{ marginLeft: 2 }}
                     >
                       {"Edit"}

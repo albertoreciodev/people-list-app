@@ -1,5 +1,5 @@
-import { Person } from '@/persons'
 import { v4 as uuidv4 } from 'uuid'
+import { Person } from './person.type'
 
 
 /**
@@ -11,7 +11,8 @@ import { v4 as uuidv4 } from 'uuid'
  * @param {string} [birthDate=''] - The birth date of the person.
  * @returns {Person} A new person object.
  */
-export default function createPerson (firstName: string = '', lastName: string = '', jobTitle: string = '', birthDate: string = '' ): Person {
+export function createPerson (firstName: string = '', lastName: string = '', jobTitle: string = '', birthDate: string = '' ): Person {
+  
   return {
     id: uuidv4(),
     firstName,
@@ -21,3 +22,21 @@ export default function createPerson (firstName: string = '', lastName: string =
     active: true
   }
 }
+
+
+/**
+ * Creates a list of persons with predefined data.
+ * 
+ * @returns {Person[]} An array of Person objects.
+ */
+
+export function createPersonsList (): Person[] {
+
+  return [  
+    createPerson('Jorge', 'Ramirez', 'Backend developer', '22/11/1982'),
+    createPerson('Sebastián', 'Velázquez', 'Systems Admin & Developer', '07/08/1986'),
+    createPerson('Alberto', 'Recio', 'Frontend Developer', '22/11/1983'),
+    createPerson('Xevi', 'Serrat', 'Frontend Developer', '28/05/1986'),
+    createPerson('Christian', 'Feldermann', 'Head of Technology', '01/01/1974')  
+  ]  
+} 

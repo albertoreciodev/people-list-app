@@ -3,29 +3,26 @@ import { Button, Box } from "@mui/material/";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Person } from "@/persons";
-import { ChangeEvent, FormEvent, SyntheticEvent, useState } from "react";
 
-/**
- * @typedef {Object} FormPersonProps
- * @property {(person: Person) => void} onCreate - Callback function invoked when a new person is created.
- *   - @param {Person} person - The person object representing the newly created person.
- */
+import { ChangeEvent, FormEvent, SyntheticEvent, useState } from "react";
+import { Person } from "../domain/person.type";
+import { createPerson } from "../domain/person.helper";
+
 type PersonFormProps = {
   onAddPerson: (person: Person) => void;
-  dataForm: Person;
-  newPerson: Person;
-  onUpdateForm: (person: Person) => void;
-  onNewPerson: (person: Person) => void;
+  selectedPerson: Person | null;
+  onUpdatePerson(personId: string, person: Partial<Person>): void;
 };
 
 export const PersonForm = ({
-  dataForm,
-  newPerson,
   onAddPerson,
-  onUpdateForm,
-  onNewPerson,
+  onUpdatePerson,
+  selectedPerson,
 }: PersonFormProps) => {
+  const emptyPerson = createPerson();
+  const [dataForm, setDataForm] = useState<Person>(emptyPerson);
+  //if (selectedPerson && selectedPerson !== null) setDataForm(selectedPerson);
+
   /**
    * Handles the change event of an input element.
    *
@@ -34,11 +31,7 @@ export const PersonForm = ({
    */
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    const field = {
-      [name]: value,
-    };
-    //setNewPerson((prevNewPerson) => ({ ...prevNewPerson, [name]: value }));
-    //onNewPerson([...dataForm, field]);
+    setDataForm((prevDataForm) => ({ ...prevDataForm, [name]: value }));
   };
 
   /**
@@ -49,7 +42,14 @@ export const PersonForm = ({
    */
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    onAddPerson(newPerson);
+    //onAddPerson(dataForm);
+    //setDataForm(emptyPerson);
+    if (selectedPerson === null) {
+      onAddPerson(dataForm);
+    } else {
+      onUpdatePerson(dataForm.id, dataForm);
+    }
+    setDataForm(emptyPerson);
   };
 
   return (
@@ -122,8 +122,8 @@ export const PersonForm = ({
             value={dataForm.active}
             ///onChange={(e) => console.log("checkbox", e.target.checked)}
             onChange={(e: SyntheticEvent<Element, Event>, checked: boolean) =>
-              setNewPerson((prevNewPerson) => ({
-                ...prevNewPerson,
+              setDataForm((prevDataForm) => ({
+                ...prevDataForm,
                 active: checked,
               }))
             }

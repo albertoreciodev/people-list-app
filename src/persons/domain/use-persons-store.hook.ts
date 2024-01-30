@@ -1,7 +1,7 @@
-import { Person, Persons } from "@/persons";
+import {Persons } from "@/persons";
 import { ChangeEvent, FormEvent, useState } from "react";
-import createPerson from "./person.helper";
-import createPersonsList from "./persons-list.helper";
+import { Person } from "./person.type";
+import { createPerson, createPersonsList } from "./person.helper";
 
 /**
  * Represents the store for managing persons.
@@ -20,44 +20,40 @@ interface PersonsStore {
   persons: Person[],
   selectedPerson: Person | null,
   selectPerson( person: Person | null ): void,
-  addPerson(person: Person): void,
-  updatePerson(person: Partial<Person>): void,
-  deletePerson(personId: string): void,
-  toggleActive(personId: string): void,
+  addPerson( person: Person ): void,
+  updatePerson( personId: string, person: Partial<Person> ): void; 
+  deletePerson( personId: string ): void,
+  toggleActive( personId: string ): void,
 }
 
 
-export const usePersonsStore = () => {
-  // Create a empty values person
-  const emptyPerson = createPerson();
+export const usePersonsStore = ():PersonsStore => {
+
   const personsList = createPersonsList();
-
-  const [persons, setPersons] = useState<Person[]>(personsList);
+  const [persons, setPersons] = useState<Person[]>(() => createPersonsList());
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);  
-  const [dataForm, setDataForm] = useState<Partial<Person>>(emptyPerson);
-  const [newPerson, setNewPerson] = useState(emptyPerson);
-
- 
-
-   /**
-   * Adds a new person to the list.
-   *
-   * @param {Person} person - The person object to be added.
-   * @returns {void}
-   */
-   const createNewPerson = (person: Person): void => {
-    setNewPerson((prevNewPerson) => ({ ...prevNewPerson, person }));
-  };
 
 
   /**
    * Handles the edit action for a person with the specified ID.
    *
-   * @param {string} person - The ID of the person to edit.
+   * @param {string} personId - The ID of the person to edit.
+   * @param {Person} person - The person object to be added.
    * @returns {void}
    */
-  const updatePerson = (person: Partial<Person>): void => {
-    setDataForm(person);
+  const updatePerson = (personId: string, person: Partial<Person>): void => {
+
+    if (person !== null) setSelectedPerson(person);
+
+    
+    // setPersons(persons.map((person) => {
+    //   if (person.id === personId) {
+    //     return { ...person, person}
+    //   } else {
+    //     return person;
+    //   }
+    // }))
+     
   };
 
 
@@ -69,7 +65,7 @@ export const usePersonsStore = () => {
    */
   const addPerson = (person: Person): void => {
     setPersons([...persons, person]);
-    setDataForm(emptyPerson);
+    setSelectedPerson(null);
   };
 
   /**
@@ -102,7 +98,7 @@ export const usePersonsStore = () => {
     );
   };
 
-  //se le pasa objeto
+  
   const selectPerson = (person: Person | null): void => {
     setSelectedPerson(person);
   };
@@ -112,8 +108,6 @@ export const usePersonsStore = () => {
 
 
     return {
-      newPerson,
-      dataForm,
       persons,
       selectedPerson,
       selectPerson,
@@ -121,7 +115,6 @@ export const usePersonsStore = () => {
       updatePerson,
       deletePerson,
       toggleActive,
-      createNewPerson,
     }
 
 }

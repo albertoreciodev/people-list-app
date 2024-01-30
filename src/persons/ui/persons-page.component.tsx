@@ -4,16 +4,13 @@ import { usePersonsStore } from "../domain/use-persons-store.hook";
 
 export const PersonsPage = () => {
   const {
+    persons,
+    selectedPerson,
+    selectPerson,
     addPerson,
     deletePerson,
-    persons,
-    selectPerson,
-    selectedPerson,
-    toggleActive,
     updatePerson,
-    dataForm,
-    newPerson,
-    createNewPerson,
+    toggleActive,
   } = usePersonsStore();
 
   return (
@@ -24,14 +21,13 @@ export const PersonsPage = () => {
         onDelete={deletePerson}
         onSelect={selectPerson}
         selectedPerson={selectedPerson}
-        onUpdate={updatePerson}
+        onUpdatePerson={updatePerson}
       />
+
       <PersonForm
-        dataForm={dataForm}
-        newPerson={newPerson}
         onAddPerson={addPerson}
-        onUpdateForm={updatePerson}
-        onNewPerson={createNewPerson}
+        onUpdatePerson={updatePerson}
+        selectedPerson={selectedPerson}
       />
     </>
   );
