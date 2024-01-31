@@ -121,9 +121,10 @@ export const PersonForm = ({
             labelPlacement="start"
             label="Active"
             name="active"
-            value={(e: SyntheticEvent<Element, Event>) =>
-              dataForm.active ? e.target.checked : null
-            }
+            // // value={(e: SyntheticEvent<Element, Event>) =>
+            // //   dataForm.active ? e.target.checked : null
+            // // }
+            value={dataForm.active}
             onChange={(e: SyntheticEvent<Element, Event>, checked: boolean) =>
               setDataForm((prevDataForm) => ({
                 ...prevDataForm,
