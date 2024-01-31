@@ -20,8 +20,6 @@ export const PersonsPage = () => {
         onActivate={toggleActive}
         onDelete={deletePerson}
         onSelect={selectPerson}
-        selectedPerson={selectedPerson}
-        onUpdatePerson={updatePerson}
       />
 
       <PersonForm

@@ -1,10 +1,19 @@
-import TextField from "@mui/material/TextField";
-import { Button, Box } from "@mui/material/";
-import FormGroup from "@mui/material/FormGroup";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import {
+  Button,
+  Box,
+  FormGroup,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+} from "@mui/material/";
 
-import { ChangeEvent, FormEvent, SyntheticEvent, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import { Person } from "../domain/person.type";
 import { createPerson } from "../domain/person.helper";
 
@@ -19,9 +28,11 @@ export const PersonForm = ({
   onUpdatePerson,
   selectedPerson,
 }: PersonFormProps) => {
-  const emptyPerson = createPerson();
-  const [dataForm, setDataForm] = useState<Person>(emptyPerson);
-  //if (selectedPerson && selectedPerson !== null) setDataForm(selectedPerson);
+  const [dataForm, setDataForm] = useState<Person>(() => createPerson());
+
+  useEffect(() => {
+    selectedPerson !== null ? setDataForm(selectedPerson) : createPerson();
+  }, [selectedPerson]);
 
   /**
    * Handles the change event of an input element.
@@ -42,15 +53,18 @@ export const PersonForm = ({
    */
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    //onAddPerson(dataForm);
-    //setDataForm(emptyPerson);
+
     if (selectedPerson === null) {
       onAddPerson(dataForm);
+      setDataForm(() => createPerson());
     } else {
       onUpdatePerson(dataForm.id, dataForm);
+      setDataForm(() => createPerson());
     }
-    setDataForm(emptyPerson);
   };
+
+  const textButtonPerson =
+    selectedPerson === null ? "Create new person" : "Edit person";
 
   return (
     <>
@@ -64,18 +78,6 @@ export const PersonForm = ({
           marginTop: "25px",
         }}
       >
-        <TextField
-          id="id"
-          name="id"
-          label="ID"
-          type="text"
-          variant="outlined"
-          sx={{ width: "100px" }}
-          value={dataForm.id}
-          onChange={handleChange}
-          disabled
-        />
-
         <TextField
           id="firstName"
           name="firstName"
@@ -119,8 +121,9 @@ export const PersonForm = ({
             labelPlacement="start"
             label="Active"
             name="active"
-            value={dataForm.active}
-            ///onChange={(e) => console.log("checkbox", e.target.checked)}
+            value={(e: SyntheticEvent<Element, Event>) =>
+              dataForm.active ? e.target.checked : null
+            }
             onChange={(e: SyntheticEvent<Element, Event>, checked: boolean) =>
               setDataForm((prevDataForm) => ({
                 ...prevDataForm,
@@ -130,11 +133,9 @@ export const PersonForm = ({
           />
         </FormGroup>
 
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-        >{`Create new user`}</Button>
+        <Button variant="contained" color="primary" type="submit">
+          {textButtonPerson}
+        </Button>
       </Box>
     </>
   );

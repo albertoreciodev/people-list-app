@@ -1,7 +1,7 @@
-import {Persons } from "@/persons";
-import { ChangeEvent, FormEvent, useState } from "react";
+
+import { useState } from "react";
 import { Person } from "./person.type";
-import { createPerson, createPersonsList } from "./person.helper";
+import { createPersonsList } from "./person.helper";
 
 /**
  * Represents the store for managing persons.
@@ -29,7 +29,6 @@ interface PersonsStore {
 
 export const usePersonsStore = ():PersonsStore => {
 
-  const personsList = createPersonsList();
   const [persons, setPersons] = useState<Person[]>(() => createPersonsList());
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);  
 
@@ -41,19 +40,14 @@ export const usePersonsStore = ():PersonsStore => {
    * @param {Person} person - The person object to be added.
    * @returns {void}
    */
-  const updatePerson = (personId: string, person: Partial<Person>): void => {
-
-    if (person !== null) setSelectedPerson(person);
-
-    
-    // setPersons(persons.map((person) => {
-    //   if (person.id === personId) {
-    //     return { ...person, person}
-    //   } else {
-    //     return person;
-    //   }
-    // }))
-     
+  const updatePerson = (personId: string, updatePerson: Partial<Person>): void => {
+    setPersons((prevPersons) => prevPersons.map((currentPerson) => {
+      if (currentPerson.id === personId) {
+        return { ...currentPerson, ...updatePerson}
+      } else {
+        return currentPerson;
+      }
+    }))     
   };
 
 
@@ -64,8 +58,7 @@ export const usePersonsStore = ():PersonsStore => {
    * @returns {void}
    */
   const addPerson = (person: Person): void => {
-    setPersons([...persons, person]);
-    setSelectedPerson(null);
+     setPersons((prevPersons) => [...prevPersons, person]);
   };
 
   /**
@@ -75,8 +68,7 @@ export const usePersonsStore = ():PersonsStore => {
    * @returns {void}
    */
   const deletePerson = (personId: string): void => {
-    setPersons(
-      persons.filter((person) => person.id !== personId)
+    setPersons((prevPersons) => prevPersons.filter((person) => person.id !== personId)
     );
   };
 
@@ -87,8 +79,7 @@ export const usePersonsStore = ():PersonsStore => {
    * @returns {void}
    */
   const toggleActive = (personId: string): void => {
-    setPersons(
-      persons.map((person) => {
+    setPersons((prevPersons) => prevPersons.map((person) => {
         if (person.id === personId) {
           return { ...person, active: !person.active };
         } else {
@@ -102,8 +93,6 @@ export const usePersonsStore = ():PersonsStore => {
   const selectPerson = (person: Person | null): void => {
     setSelectedPerson(person);
   };
-
-
 
 
 
