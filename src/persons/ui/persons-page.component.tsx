@@ -1,6 +1,6 @@
 import { PersonForm } from "./person-form.component";
 import { PersonsTable } from "./persons-table.component";
-import { usePersonsStore } from "../domain/use-persons-store.hook";
+import { usePersonsApi } from "../../server-data/domain/use-persons-api.hook";
 
 export const PersonsPage = () => {
   const {
@@ -11,8 +11,7 @@ export const PersonsPage = () => {
     deletePerson,
     updatePerson,
     toggleActive,
-  } = usePersonsStore();
-
+  } = usePersonsApi();
   return (
     <>
       <PersonsTable
@@ -26,6 +25,7 @@ export const PersonsPage = () => {
         onAddPerson={addPerson}
         onUpdatePerson={updatePerson}
         selectedPerson={selectedPerson}
+        onSelect={selectPerson}
       />
     </>
   );

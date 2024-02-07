@@ -29,7 +29,7 @@ interface PersonsStore {
 
 export const usePersonsStore = ():PersonsStore => {
 
-  const [persons, setPersons] = useState<Person[]>(() => createPersonsList());
+  const [persons, setPersons] = useState<Person[]>(() => createPersonsList()); // get persons list con llamada api
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);  
 
 

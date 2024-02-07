@@ -10,29 +10,32 @@ import {
 import {
   ChangeEvent,
   FormEvent,
+  MouseEvent,
   SyntheticEvent,
   useEffect,
   useState,
 } from "react";
-import { Person } from "../domain/person.type";
-import { createPerson } from "../domain/person.helper";
+import { Person } from "@/server-data/domain/person.type";
+import { createPerson } from "@/server-data/domain/person.helper";
 
 type PersonFormProps = {
   onAddPerson: (person: Person) => void;
   selectedPerson: Person | null;
   onUpdatePerson(personId: string, person: Partial<Person>): void;
+  onSelect: (person: Person | null) => void;
 };
 
 export const PersonForm = ({
   onAddPerson,
   onUpdatePerson,
+  onSelect,
   selectedPerson,
 }: PersonFormProps) => {
   const [dataForm, setDataForm] = useState<Person>(() => createPerson());
 
   useEffect(() => {
     selectedPerson !== null ? setDataForm(selectedPerson) : createPerson();
-  }, [selectedPerson]);
+  }, [selectedPerson, setDataForm]);
 
   /**
    * Handles the change event of an input element.
@@ -51,15 +54,26 @@ export const PersonForm = ({
    * @param {FormEvent<HTMLFormElement>} e - The form submission event object.
    * @returns {void}
    */
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
-    if (selectedPerson === null) {
-      onAddPerson(dataForm);
-      setDataForm(() => createPerson());
-    } else {
-      onUpdatePerson(dataForm.id, dataForm);
-      setDataForm(() => createPerson());
+    try {
+      const response = await fetch("http://localhost:4000/api/persons", {
+        method: "POST",
+        body: JSON.stringify(dataForm),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Invalid response: ${response.status}`);
+      }
+      //alert("Add person successfully");
+      //setPersons(response);
+    } catch (err) {
+      console.error(err);
+      //alert("We can't added the person, try again later?");
     }
   };
 
@@ -121,9 +135,6 @@ export const PersonForm = ({
             labelPlacement="start"
             label="Active"
             name="active"
-            // // value={(e: SyntheticEvent<Element, Event>) =>
-            // //   dataForm.active ? e.target.checked : null
-            // // }
             value={dataForm.active}
             onChange={(e: SyntheticEvent<Element, Event>, checked: boolean) =>
               setDataForm((prevDataForm) => ({

@@ -10,7 +10,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { Person } from "../domain/person.type";
+import { Person } from "@/server-data/domain/person.type";
 import { useEffect, useState } from "react";
 
 const personsTableHeader = [
@@ -47,6 +47,34 @@ export const PersonsTable = ({
   if (isLoading) {
     return <CircularProgress />;
   }
+
+  const handleDeletePerson = async (personId: string) => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/persons/${personId}`,
+        {
+          method: "DELETE",
+          body: JSON.stringify(personId),
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      console.log("response ==== handleDeletePerson", response);
+
+      const data = await response.json();
+      console.log("data ==== handleDeletePerson", response);
+
+      if (!response.ok) {
+        throw new Error(`Invalid response: ${response.status}`);
+      }
+      alert("Delete a person successfully");
+      //setPersons(data)
+    } catch (err) {
+      console.error(err);
+      alert("We can't delete the person");
+    }
+  };
 
   return (
     <>
@@ -89,7 +117,7 @@ export const PersonsTable = ({
                     </Button>
                     <Button
                       variant="outlined"
-                      onClick={() => onDelete(person.id)}
+                      onClick={() => handleDeletePerson(person.id)}
                       sx={{ marginLeft: 2 }}
                     >
                       {"Delete"}
